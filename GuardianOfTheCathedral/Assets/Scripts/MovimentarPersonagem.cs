@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class MovimentarPersonagem : MonoBehaviour
 {
     public CharacterController controle;
     public float velocidade = 6f;
@@ -16,10 +16,16 @@ public class NewBehaviourScript : MonoBehaviour
 
     Vector3 velocidadeCai;
 
+    private Transform cameraTransform;
+    private bool estahAbaixado = false;
+    private bool levantarBloqueado;
+    public float alturaLevantado, alturaAbaixado, posicaoCameraEmPe, posicaoCameraAbaixado, velocidadeAbaixar;
+
     // Start is called before the first frame update
     void Start()
     {
         controle = GetComponent<CharacterController>();
+        cameraTransform = Camera.main.transform;
     }
 
     // Update is called once per frame
@@ -53,5 +59,40 @@ public class NewBehaviourScript : MonoBehaviour
         }
 
         controle.Move(velocidadeCai * Time.deltaTime);
+
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            AgacharLevantar();
+        }
+
+        ChecarBloqueioAbaixado();
+
+        if (!levantarBloqueado && estaNoChao && Input.GetButtonDown("Jump"))
+        {
+            velocidadeCai.y = Mathf.Sqrt(alturaPulo * -2f * gravidade);
+        }
+    }
+
+    private void AgacharLevantar()
+    {
+        estahAbaixado = !estahAbaixado;
+        if (levantarBloqueado && estahAbaixado)
+        {
+            controle.height = alturaAbaixado;
+            cameraTransform.localPosition = new Vector3(0, posicaoCameraAbaixado, 0);
+        }
+        else
+        {
+            controle.height = alturaLevantado;
+            cameraTransform.localPosition = new Vector3(0, posicaoCameraEmPe, 0);
+        }
+
+    }
+
+    private void ChecarBloqueioAbaixado()
+    {
+        //Debug.DrawRay(cameraTransform.position, Vector3.up * 1.1f, Color.red);
+        RaycastHit hit;
+        levantarBloqueado = Physics.Raycast(cameraTransform.position, Vector3.up, out hit, 1.1f);
     }
 }

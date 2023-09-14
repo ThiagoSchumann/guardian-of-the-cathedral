@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class RotacaoCamera : MonoBehaviour
 {
-    public floar sensibilidadeMouse = 100f;
+    public float sensibilidadeMouse = 100f;
     public float anguloMinimo = -90f;
     public float anguloMaximo = 90f;
 
@@ -14,7 +14,8 @@ public class NewBehaviourScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        Cursor.lockState = CursorLockMode.Locked; // trava o cursor no centro da tela
+        Cursor.visible = false; // esconde o cursor
     }
 
     // Update is called once per frame
