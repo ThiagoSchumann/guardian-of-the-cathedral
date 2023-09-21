@@ -26,7 +26,7 @@ public class MovimentoCabeca : MonoBehaviour
 
         salvaPosicao = transform.localPosition;
 
-        if (Horizontal == 0.0 && Vertical == 0.0)
+        if (Horizontal == 0 && Vertical == 0)
         {
             tempo = 0.0f;
         }

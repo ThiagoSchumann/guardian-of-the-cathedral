@@ -26,7 +26,7 @@ public class RotacaoCamera : MonoBehaviour
 
         rotacao -= mouseY;
         rotacao = Mathf.Clamp(rotacao, anguloMinimo, anguloMaximo);
-        transformPlayer.localRotation = Quaternion.Euler(rotacao, 0, 0);
-        transform.Rotate(Vector3.up * mouseX);
+        transform.localRotation = Quaternion.Euler(rotacao, 0, 0);
+        transformPlayer.Rotate(Vector3.up * mouseX);
     }
 }

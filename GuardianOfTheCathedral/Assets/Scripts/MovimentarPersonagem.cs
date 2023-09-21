@@ -5,7 +5,7 @@ using UnityEngine;
 public class MovimentarPersonagem : MonoBehaviour
 {
     public CharacterController controle;
-    public float velocidade = 6f;
+    public float velocidade = 5f;
     public float alturaPulo = 6f;
     public float gravidade = -20f;
 
@@ -75,8 +75,13 @@ public class MovimentarPersonagem : MonoBehaviour
 
     private void AgacharLevantar()
     {
+        if (levantarBloqueado || !estaNoChao)
+        {
+            return;
+        }
+
         estahAbaixado = !estahAbaixado;
-        if (levantarBloqueado && estahAbaixado)
+        if (estahAbaixado)
         {
             controle.height = alturaAbaixado;
             cameraTransform.localPosition = new Vector3(0, posicaoCameraAbaixado, 0);

@@ -2,20 +2,21 @@
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
 
 # Unity specific
-/[Ll]ibrary/
-/[Tt]emp/
-/[Oo]bj/
-/[Bb]uild/
-/[Bb]uilds/
-/[Ll]ogs/
-/[Uu]ser[Ss]ettings/
-/[Mm]emoryCaptures/
-/[Rr]ecordings/
-/[Aa]ssets/Plugins/Editor/JetBrains*
-/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
-/[Aa]ssets/[Ss]treamingAssets/aa.meta
-/[Aa]ssets/[Ss]treamingAssets/aa/*
-sysinfo.txt
+GuardianOfTheCathedral/Library/
+GuardianOfTheCathedral/Temp/
+GuardianOfTheCathedral/Obj/
+GuardianOfTheCathedral/Build/
+GuardianOfTheCathedral/Builds/
+GuardianOfTheCathedral/Logs/
+GuardianOfTheCathedral/UserSettings/
+GuardianOfTheCathedral/MemoryCaptures/
+GuardianOfTheCathedral/Recordings/
+GuardianOfTheCathedral/Assets/Plugins/Editor/JetBrains*
+GuardianOfTheCathedral/Assets/AddressableAssetsData/*/*.bin*
+GuardianOfTheCathedral/Assets/StreamingAssets/aa.meta
+GuardianOfTheCathedral/Assets/StreamingAssets/aa/*
+GuardianOfTheCathedral/sysinfo.txt
+GuardianOfTheCathedral/Data/
 
 # Misc
 .vs/
