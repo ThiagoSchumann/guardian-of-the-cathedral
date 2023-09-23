@@ -57,6 +57,7 @@ public class MovimentarPersonagem : MonoBehaviour
         float z = Input.GetAxis("Vertical");
         Vector3 mover = transform.right * x + transform.forward * z;
         controle.Move(mover * velocidade * Time.deltaTime);
+    }
 
         // Reproduzir som de passos
         if (estaNoChao && (x != 0 || z != 0))
