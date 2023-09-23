@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Arrastar
   - Pegar
+  - FxTemporaire
+  - Arma
   layers:
   - Default
   - TransparentFX

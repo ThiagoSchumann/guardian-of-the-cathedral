@@ -8,6 +8,8 @@ public class MovimentarPersonagem : MonoBehaviour
     public float velocidade = 5f;
     public float alturaPulo = 6f;
     public float gravidade = -20f;
+    public AudioClip somPulo;
+    public AudioSource audioSrc;
 
     public Transform checaChao;
     public float raioEsfera = 0.4f;
@@ -26,6 +28,8 @@ public class MovimentarPersonagem : MonoBehaviour
     {
         controle = GetComponent<CharacterController>();
         cameraTransform = Camera.main.transform;
+        audioSrc = GetComponent<AudioSource>();
+        estaNoChao = true;
     }
 
     // Update is called once per frame
@@ -37,39 +41,47 @@ public class MovimentarPersonagem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // cria uma de raio esfera que verifica se o personagem esta no chao
-        // se estah em contato com chaoMask, entao retorna true
-        estaNoChao = Physics.CheckSphere(checaChao.position, raioEsfera, chaoMask);
+        MoverPersonagem();
+        AplicarPulo();
+        AplicarGravidade();
+        AgacharOuLevantar();
+        ChecarBloqueioAbaixado();
+    }
 
+    private void MoverPersonagem()
+    {
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
-
         Vector3 mover = transform.right * x + transform.forward * z;
-
         controle.Move(mover * velocidade * Time.deltaTime);
+    }
 
-        if (estaNoChao && Input.GetButtonDown("Jump"))
+    private void AplicarPulo()
+    {
+        estaNoChao = Physics.CheckSphere(checaChao.position, raioEsfera, chaoMask);
+        if (estaNoChao && Input.GetButtonDown("Jump") && !levantarBloqueado)
         {
             velocidadeCai.y = Mathf.Sqrt(alturaPulo * -2f * gravidade);
+            print("Pulou");
+            audioSrc.clip = somPulo;
+            audioSrc.Play();
         }
+    }
 
+    private void AplicarGravidade()
+    {
         if (!estaNoChao)
         {
             velocidadeCai.y += gravidade * Time.deltaTime;
         }
-
         controle.Move(velocidadeCai * Time.deltaTime);
+    }
 
+    private void AgacharOuLevantar()
+    {
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
             AgacharLevantar();
-        }
-
-        ChecarBloqueioAbaixado();
-
-        if (!levantarBloqueado && estaNoChao && Input.GetButtonDown("Jump"))
-        {
-            velocidadeCai.y = Mathf.Sqrt(alturaPulo * -2f * gravidade);
         }
     }
 
