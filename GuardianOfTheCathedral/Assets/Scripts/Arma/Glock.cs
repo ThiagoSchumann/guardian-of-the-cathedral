@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Glock : MonoBehaviour
 {
+    public Text textoMunicao;
+
     private Animator anim;
     private bool estahAtirando;
     private RaycastHit hit;
@@ -11,6 +14,13 @@ public class Glock : MonoBehaviour
     public GameObject posEfeitoTiro;
     public GameObject faisca;
     private AudioSource somTiro;
+    public AudioClip[] clips;
+    private int carregador = 3;
+    private int municao;
+    public GameObject imgCursor;
+
+    // Definindo a capacidade máxima do carregador
+    private const int CAPACIDADE_CARREGADOR = 10;
 
     // Start is called before the first frame update
     void Start()
@@ -18,20 +28,78 @@ public class Glock : MonoBehaviour
         estahAtirando = false;
         anim = GetComponent<Animator>();
         somTiro = GetComponent<AudioSource>();
+        municao = CAPACIDADE_CARREGADOR; // Inicializando a munição com a capacidade máxima
+        AtualizarTextoMunicao();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (anim.GetBool("acaoOcorrendo"))
+        {
+            return;
+        }
+
         if (Input.GetButtonDown("Fire1"))
         {
-            // enquanto a animação do tiro estiver processando...
-            if (!estahAtirando)
+            if (!estahAtirando && municao > 0)
             {
+                somTiro.clip = clips[0];
+                municao--;
                 estahAtirando = true;
                 StartCoroutine(Atirando());
             }
+            else if (!estahAtirando && municao == 0 && carregador > 0)
+            {
+                Recarregar();
+            }
+            else if (!estahAtirando && municao == 0)
+            {
+                somTiro.clip = clips[2];
+                somTiro.time = 0;
+                somTiro.Play();
+            }
         }
+        else if (Input.GetButtonDown("Recarregar") && carregador > 0 && municao < CAPACIDADE_CARREGADOR)
+        {
+            Recarregar();
+        }
+        AtualizarTextoMunicao();
+
+        if (Input.GetButton("Fire2"))
+        {
+            anim.SetBool("mirar", true);
+            imgCursor.SetActive(false);
+            Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, 45, Time.deltaTime * 10);
+        }
+        else
+        {
+            anim.SetBool("mirar", false);
+            imgCursor.SetActive(true);
+            Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, 60, Time.deltaTime * 10);
+        }
+    }
+
+    private void Recarregar()
+    {
+        somTiro.clip = clips[1];
+        somTiro.time = 1.05f;
+        somTiro.Play();
+
+        anim.Play("RecarregarGlock");
+        carregador--;
+        municao = CAPACIDADE_CARREGADOR; // Recarregando com a capacidade máxima
+    }
+
+    private void AtualizarTextoMunicao()
+    {
+        textoMunicao.text = municao.ToString() + "/" + carregador.ToString();
+    }
+
+    public void AddCarregador()
+    {
+        carregador++;
+        AtualizarTextoMunicao();
     }
 
     IEnumerator Atirando()
@@ -43,6 +111,7 @@ public class Glock : MonoBehaviour
         // definir um ponto até o centro da tela
         Ray ray = Camera.main.ScreenPointToRay(new Vector3(screenX, screenY, 0));
         anim.Play("AtirarGlock");
+        somTiro.time = 0;
         somTiro.Play();
 
         GameObject efeitoTiroObj = Instantiate(efeitoTiro, posEfeitoTiro.transform.position, posEfeitoTiro.transform.rotation);
@@ -67,4 +136,5 @@ public class Glock : MonoBehaviour
 
         estahAtirando = false;
     }
+
 }
