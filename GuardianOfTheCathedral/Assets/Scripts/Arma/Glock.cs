@@ -14,6 +14,8 @@ public class Glock : MonoBehaviour
     public GameObject posEfeitoTiro;
     public GameObject faisca;
     private AudioSource somTiro;
+    public AudioClip somColeta;
+
     public AudioClip[] clips;
     private int carregador = 3;
     private int municao;
@@ -98,6 +100,8 @@ public class Glock : MonoBehaviour
 
     public void AddCarregador()
     {
+        somTiro.PlayOneShot(somColeta); // Reproduz o som de coleta
+
         carregador++;
         AtualizarTextoMunicao();
     }

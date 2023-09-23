@@ -9,12 +9,15 @@ public class MovimentarPersonagem : MonoBehaviour
     public float alturaPulo = 6f;
     public float gravidade = -20f;
     public AudioClip somPulo;
+    public AudioClip somPassos;
+
     public AudioSource audioSrc;
 
     public Transform checaChao;
     public float raioEsfera = 0.4f;
     public LayerMask chaoMask;
     public bool estaNoChao;
+
 
     Vector3 velocidadeCai;
 
@@ -54,6 +57,22 @@ public class MovimentarPersonagem : MonoBehaviour
         float z = Input.GetAxis("Vertical");
         Vector3 mover = transform.right * x + transform.forward * z;
         controle.Move(mover * velocidade * Time.deltaTime);
+
+        // Reproduzir som de passos
+        if (estaNoChao && (x != 0 || z != 0))
+        {
+            if (!audioSrc.isPlaying)
+            {
+                audioSrc.clip = somPassos;
+                audioSrc.loop = true; // Faça o som dos passos repetir
+                audioSrc.Play();
+            }
+        }
+        else
+        {
+            audioSrc.loop = false; // Pare de repetir o som
+            audioSrc.Stop(); // Pare o som dos passos
+        }
     }
 
     private void AplicarPulo()
