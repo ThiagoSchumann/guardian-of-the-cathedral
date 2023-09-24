@@ -8,6 +8,7 @@ TagManager:
   - Pegar
   - FxTemporaire
   - Arma
+  - LevarDano
   layers:
   - Default
   - TransparentFX

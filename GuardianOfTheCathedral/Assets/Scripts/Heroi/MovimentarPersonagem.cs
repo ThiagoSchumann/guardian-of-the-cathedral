@@ -1,23 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MovimentarPersonagem : MonoBehaviour
 {
+    private int vida = 100;
+    public Slider sliderVida;
     public CharacterController controle;
     public float velocidade = 5f;
     public float alturaPulo = 6f;
     public float gravidade = -20f;
     public AudioClip somPulo;
     public AudioClip somPassos;
-
     public AudioSource audioSrc;
-
     public Transform checaChao;
     public float raioEsfera = 0.4f;
     public LayerMask chaoMask;
     public bool estaNoChao;
-
 
     Vector3 velocidadeCai;
 
@@ -25,6 +25,14 @@ public class MovimentarPersonagem : MonoBehaviour
     private bool estahAbaixado = false;
     private bool levantarBloqueado;
     public float alturaLevantado, alturaAbaixado, posicaoCameraEmPe, posicaoCameraAbaixado, velocidadeAbaixar;
+
+
+    public void AtualizarVida(int novaVida)
+    {
+        vida = Mathf.CeilToInt(Mathf.Clamp(vida + novaVida, 0, 100));
+
+        sliderVida.value = vida;
+    }
 
     // Start is called before the first frame update
     void Start()

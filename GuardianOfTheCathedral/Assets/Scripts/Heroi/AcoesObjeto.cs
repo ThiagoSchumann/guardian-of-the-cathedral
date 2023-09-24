@@ -26,25 +26,25 @@ public class AcoesObjeto : MonoBehaviour
             if (!pegou)
             {
                 Arrastar();
-                print("Update -> Entrando em Arrastar");
+                // print("Update -> Entrando em Arrastar");
             }
             else
             {
                 Soltar();
-                print("Update -> Entrando em Soltar");
+                // print("Update -> Entrando em Soltar");
             }
             pegou = !pegou;
         }
     }
-
     private void Pegar()
     {
-        IPegavel obj = idObjetos.GetObjPegar().GetComponent<IPegavel>();
-        obj.Pegar();
+        // IPegavel obj = idObjetos.GetObjPegar().GetComponent<IPegavel>();
+        // obj.Pegar();
 
         Destroy(idObjetos.GetObjPegar());
         idObjetos.EsconderTexto();
     }
+
 
     private void Arrastar()
     {
