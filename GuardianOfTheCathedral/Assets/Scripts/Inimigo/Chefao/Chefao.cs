@@ -131,4 +131,9 @@ public class Chefao : MonoBehaviour, ILevarDano
     {
         player.GetComponent<MovimentarPersonagem>().AtualizarVida(-20);
     }
+
+    public int GetVida()
+    {
+        return vida;
+    }
 }

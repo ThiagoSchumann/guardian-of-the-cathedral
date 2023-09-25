@@ -17,12 +17,14 @@ public class Glock : MonoBehaviour
     public AudioClip somColeta;
 
     public AudioClip[] clips;
-    private int carregador = 3;
+    private int carregador = 4;
     private int municao;
     public GameObject imgCursor;
 
+    public MovimentarPersonagem personagem;
+
     // Definindo a capacidade máxima do carregador
-    private const int CAPACIDADE_CARREGADOR = 10;
+    private const int CAPACIDADE_CARREGADOR = 17;
 
     // Start is called before the first frame update
     void Start()
@@ -138,6 +140,11 @@ public class Glock : MonoBehaviour
                 {
                     ILevarDano levarDano = hit.transform.GetComponent<ILevarDano>();
                     levarDano.LevarDano(5);
+
+                    if (levarDano.GetVida() <= 0)
+                    {
+                        personagem.IncrementarMortos();
+                    }
                 }
             }
         }

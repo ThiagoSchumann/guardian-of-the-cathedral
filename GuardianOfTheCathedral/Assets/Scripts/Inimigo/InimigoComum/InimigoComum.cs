@@ -16,6 +16,7 @@ public class InimigoComum : MonoBehaviour, ILevarDano
     private AudioSource audioSrc;
     private FieldOfView fov;
     private PatrulharAleatorio pal;
+    private bool isAtacando = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -59,6 +60,7 @@ public class InimigoComum : MonoBehaviour, ILevarDano
         if (distanciaDoPlayer < distanciaDoAtaque)
         {
             agente.isStopped = true;
+            // isAtacando = true;
 
             anim.SetTrigger("ataque");
             anim.SetBool("podeAndar", false);
@@ -72,6 +74,7 @@ public class InimigoComum : MonoBehaviour, ILevarDano
         {
             anim.SetBool("pararAtaque", true);
             CorrigirRigidSair();
+            // isAtacando = false;
         }
 
         if (anim.GetBool("podeAndar"))
@@ -127,6 +130,10 @@ public class InimigoComum : MonoBehaviour, ILevarDano
     public void Passo()
     {
         audioSrc.PlayOneShot(somPasso, 0.5f);
+    }
+    public int GetVida()
+    {
+        return vida;
     }
 
 }

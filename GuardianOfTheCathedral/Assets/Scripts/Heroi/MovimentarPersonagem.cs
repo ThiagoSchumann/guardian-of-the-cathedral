@@ -27,10 +27,13 @@ public class MovimentarPersonagem : MonoBehaviour
     private bool levantarBloqueado;
     public float alturaLevantado, alturaAbaixado, posicaoCameraEmPe, posicaoCameraAbaixado, velocidadeAbaixar;
 
+    public Text textoMortos; // Referência para o texto que exibirá o número de mortos
+    private int numeroMortos = 0; // Contagem de 
 
     public void AtualizarVida(int novaVida)
     {
         vida = Mathf.CeilToInt(Mathf.Clamp(vida + novaVida, 0, 100));
+        print("Vida: " + vida);
 
         sliderVida.value = vida;
     }
@@ -42,6 +45,8 @@ public class MovimentarPersonagem : MonoBehaviour
         cameraTransform = Camera.main.transform;
         audioSrc = GetComponent<AudioSource>();
         estaNoChao = true;
+
+        AtualizarTextoMortos();
     }
 
     // Update is called once per frame
@@ -154,5 +159,19 @@ public class MovimentarPersonagem : MonoBehaviour
         Cursor.visible = true;
         SceneManager.LoadScene(0);
     }
+
+    // Método para aumentar a contagem de mortos
+    public void IncrementarMortos()
+    {
+        numeroMortos++;
+        AtualizarTextoMortos();
+    }
+
+    // Método para atualizar o texto
+    private void AtualizarTextoMortos()
+    {
+        textoMortos.text = "Mortos: " + numeroMortos.ToString();
+    }
+
 
 }
