@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MovimentarPersonagem : MonoBehaviour
 {
@@ -52,6 +53,13 @@ public class MovimentarPersonagem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (vida <= 0)
+        {
+            FimDeJogo();
+            return;
+        }
+
         MoverPersonagem();
         AplicarPulo();
         AplicarGravidade();
@@ -139,4 +147,12 @@ public class MovimentarPersonagem : MonoBehaviour
         RaycastHit hit;
         levantarBloqueado = Physics.Raycast(cameraTransform.position, Vector3.up, out hit, 1.1f);
     }
+
+    private void FimDeJogo()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        SceneManager.LoadScene(0);
+    }
+
 }
